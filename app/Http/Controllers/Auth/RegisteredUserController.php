@@ -65,7 +65,8 @@ class RegisteredUserController extends Controller
         // Create full name for the existing 'name' field (for compatibility)
         $fullName = $request->first_name;
         if ($request->middle_name) {
-            $fullName .= ' ' . $request->middle_name;
+            $middleInitial = substr($request->middle_name, 0, 1); // Get first letter of middle name
+            $fullName .= ' ' . $middleInitial . '.'; // Append middle initial with period
         }
         $fullName .= ' ' . $request->last_name;
 

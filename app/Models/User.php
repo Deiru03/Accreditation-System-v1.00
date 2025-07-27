@@ -8,8 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable //implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -111,13 +112,13 @@ class User extends Authenticatable //implements MustVerifyEmail
     public function getFullNameAttribute(): string
     {
         $name = $this->first_name;
-        
+
         if ($this->middle_name) {
             $name .= ' ' . $this->middle_name;
         }
-        
+
         $name .= ' ' . $this->last_name;
-        
+
         return $name;
     }
 
@@ -131,7 +132,7 @@ class User extends Authenticatable //implements MustVerifyEmail
         return match($this->user_type) {
             'iqa' => 'IQA Administrator',
             'validator' => 'Validator',
-            'accreditor' => 'Accreditor', 
+            'accreditor' => 'Accreditor',
             'uploader' => 'Program Coordinator',
             default => 'Unknown'
         };
