@@ -1,3 +1,4 @@
+<!-- filepath: c:\xampp\htdocs\clients-project\Accreditation-Web-v1\resources\views\layouts\app.blade.php -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -16,7 +17,17 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+            @include('layouts.navigation', [
+                'navClass' => 'bg-white border-b border-gray-100',
+                'logoClass' => 'text-gray-800',
+                'buttonClass' => 'text-gray-500 bg-white hover:text-gray-700',
+                'hamburgerClass' => 'text-gray-400 hover:text-gray-500 hover:bg-gray-100',
+                'responsiveBorderClass' => 'border-gray-200',
+                'responsiveTextClass' => 'text-gray-800',
+                'responsiveSubTextClass' => 'text-gray-500',
+                'portalTitle' => 'Accreditation Web',
+                'roleBadge' => ''
+            ])
 
             <!-- Page Heading -->
             @isset($header)

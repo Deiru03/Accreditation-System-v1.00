@@ -1,3 +1,4 @@
+<!-- filepath: c:\xampp\htdocs\clients-project\Accreditation-Web-v1\resources\views\layouts\iqa.blade.php -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -16,21 +17,27 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            <!-- IQA Navigation -->
-            <nav class="bg-blue-800 border-b border-gray-100">
-                <!-- IQA specific navigation content -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex items-center">
-                            <span class="text-white font-semibold text-lg">IQA Admin Panel</span>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <!-- IQA user menu -->
-                            <span class="text-white">{{ Auth::user()->name ?? 'IQA Admin' }}</span>
-                        </div>
+            <!-- IQA Navigation with Blue Theme -->
+            @include('layouts.navigation', [
+                'navClass' => 'bg-blue-800 border-b border-blue-700',
+                'logoClass' => 'text-white',
+                'buttonClass' => 'text-blue-100 bg-blue-800 hover:text-white hover:bg-blue-700',
+                'hamburgerClass' => 'text-blue-200 hover:text-white hover:bg-blue-700',
+                'responsiveBorderClass' => 'border-blue-600',
+                'responsiveTextClass' => 'text-white',
+                'responsiveSubTextClass' => 'text-blue-200',
+                'portalTitle' => 'IQA Admin Panel',
+                'roleBadge' => 'IQA ADMIN'
+            ])
+
+            <!-- Page Heading -->
+            @isset($header)
+                <header class="bg-blue-700 shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        <div class="text-white">{{ $header }}</div>
                     </div>
-                </div>
-            </nav>
+                </header>
+            @endisset
 
             <!-- Page Content -->
             <main>
