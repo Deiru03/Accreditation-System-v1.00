@@ -27,7 +27,16 @@
                 'responsiveTextClass' => 'text-white',
                 'responsiveSubTextClass' => 'text-green-200',
                 'portalTitle' => 'VAL - Validator Portal',
-                'roleBadge' => 'VALIDATOR'
+                'portalTitleClass' => 'text-white font-semibold text-lg border-l border-green-500 pl-6',
+                'roleBadge' => strtoupper(Auth::user()->user_type),
+                'roleBadgeClass' => 'bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-md',
+                'linkClass' => 'text-green-100 hover:text-white hover:border-green-300 focus:outline-none focus:text-white focus:border-green-300 border-b-2 border-transparent',
+                'responsiveLinkClass' => 'text-green-100 hover:text-white hover:bg-green-600',
+                'additionalLinks' => [
+                    // ['route' => 'validator.queue', 'label' => 'Validation Queue'],
+                    // ['route' => 'validator.documents', 'label' => 'My Documents'],
+                    // ['route' => 'validator.history', 'label' => 'History']
+                ]
             ])
 
             <!-- Page Heading -->

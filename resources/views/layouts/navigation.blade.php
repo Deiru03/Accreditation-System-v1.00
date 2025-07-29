@@ -14,18 +14,28 @@
                 <!-- Portal Title (if provided) -->
                 @isset($portalTitle)
                     <div class="hidden sm:flex items-center ml-6">
-                        <span class="text-white font-semibold text-lg border-l border-green-500 pl-6">
+                        <span class="{{ $portalTitleClass ?? 'text-white font-semibold text-lg border-l border-green-500 pl-6' }}">
                             {{ $portalTitle }}
                         </span>
                     </div>
                 @endisset
 
-                <!-- Navigation Links -->
+                <!-- Navigation Links with Adaptive Colors -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
-                                class="{{ $linkClass ?? '' }}">
+                                class="{{ $linkClass ?? 'text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300' }}">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <!-- Add more navigation links here if needed -->
+                    @isset($additionalLinks)
+                        @foreach($additionalLinks as $link)
+                            <x-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'])"
+                                        class="{{ $linkClass ?? 'text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300' }}">
+                                {{ $link['label'] }}
+                            </x-nav-link>
+                        @endforeach
+                    @endisset
                 </div>
             </div>
 
@@ -33,7 +43,7 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
                 <!-- Role Badge (if provided) -->
                 @isset($roleBadge)
-                    <span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-md">
+                    <span class="{{ $roleBadgeClass ?? 'bg-gray-500 text-white text-xs font-bold px-3 py-1 rounded-md' }}">
                         {{ $roleBadge }}
                     </span>
                 @endisset
@@ -91,7 +101,7 @@
                     <div class="font-semibold text-base {{ $responsiveTextClass ?? 'text-gray-800' }}">{{ $portalTitle }}</div>
                     @isset($roleBadge)
                         <div class="mt-2">
-                            <span class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-md">{{ $roleBadge }}</span>
+                            <span class="{{ $roleBadgeClass ?? 'bg-gray-500 text-white text-xs font-bold px-2 py-1 rounded-md' }}">{{ $roleBadge }}</span>
                         </div>
                     @endisset
                 </div>
@@ -99,9 +109,20 @@
         @endisset
 
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
+                                   class="{{ $responsiveLinkClass ?? 'text-gray-600 hover:text-gray-800 hover:bg-gray-50' }}">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <!-- Add responsive additional links -->
+            @isset($additionalLinks)
+                @foreach($additionalLinks as $link)
+                    <x-responsive-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'])"
+                                           class="{{ $responsiveLinkClass ?? 'text-gray-600 hover:text-gray-800 hover:bg-gray-50' }}">
+                        {{ $link['label'] }}
+                    </x-responsive-nav-link>
+                @endforeach
+            @endisset
         </div>
 
         <!-- Responsive Settings Options -->
@@ -112,7 +133,8 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-responsive-nav-link :href="route('profile.edit')"
+                                       class="{{ $responsiveLinkClass ?? 'text-gray-600 hover:text-gray-800 hover:bg-gray-50' }}">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
@@ -120,8 +142,8 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                                           onclick="event.preventDefault(); this.closest('form').submit();"
+                                           class="{{ $responsiveLinkClass ?? 'text-gray-600 hover:text-gray-800 hover:bg-gray-50' }}">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
