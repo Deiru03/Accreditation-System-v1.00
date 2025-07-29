@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\IqaMiddleware;
+use App\Http\Middleware\ValidatorMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,7 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Register the IqaMiddleware with an alias
         $middleware->alias([
-            'iqa' => IqaMiddleware::class,
+            'iqa' => IqaMiddleware::class, // Alias for IqaMiddleware
+            'val' => ValidatorMiddleware::class, // Alias for ValidatorMiddleware
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

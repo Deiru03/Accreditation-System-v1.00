@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ViewController extends Controller
 {
-    public function iqaDashboard()
+    public function iDashboard()
     {
         return view('iqa-views.iqa-dashboard');
     }

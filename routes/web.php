@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 //Controllers
 use App\Http\Controllers\IqaControllers\ViewController as iqaViewController;
+use App\Http\Controllers\ValidatorControllers\ViewControllers as ValidatorViewControllers;
 
 
 Route::get('/', function () {
@@ -25,13 +26,21 @@ Route::middleware(['auth', 'iqa'])->group(function () {
     // Add any routes that require the 'iqa' middleware here
 
     //Views
-    Route::get('/iqa-dashboard', [iqaViewController::class, 'iqaDashboard'])->name('iqa.dashboard');
+    Route::get('/i-dashboard', [iqaViewController::class, 'iDashboard'])->name('iqa.dashboard');
 
 });
 
 /////////////////////   Uploader Routes ////////////////////
 
 /////////////////////  Validator Routes ////////////////////
+
+Route::middleware(['auth', 'val'])->group(function () {
+    // Add any routes that require the 'validator' middleware here
+
+    //Views
+    Route::get('/v-dashboard', [ValidatorViewControllers::class, 'vDashboard'])->name('validator.dashboard');
+
+});
 
 /////////////////////  Accredator Routes ////////////////////
 
