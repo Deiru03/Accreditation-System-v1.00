@@ -11,6 +11,6 @@ class ViewControllers extends Controller
 {
     public function vDashboard(): View
     {
-        return view('validator-views.dashboard');
+        return view('validator-views.vDashboard');
     }
 }

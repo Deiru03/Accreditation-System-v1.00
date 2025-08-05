@@ -9,6 +9,6 @@ class ViewController extends Controller
 {
     public function iDashboard()
     {
-        return view('iqa-views.iqa-dashboard');
+        return view('iqa-views.iDashboard');
     }
 }
