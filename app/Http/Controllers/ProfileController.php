@@ -26,17 +26,31 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
 
-        if ($request->user()->isDirty('email')) {
-            // $request->user()->email_verified_at = null; //default code
+        $user->fill($request->validated());
+
+        // Keep legacy 'name' in sync if name parts are provided
+        $validated = $request->validated();
+        $first = $validated['first_name'] ?? $user->first_name;
+        $middle = $validated['middle_name'] ?? $user->middle_name;
+        $last = $validated['last_name'] ?? $user->last_name;
+        if ($first || $last) {
+            $full = trim($first . ' ' . ($middle ? (substr($middle, 0, 1) . '. ') : '') . $last);
+            if (!empty($full)) {
+                $user->name = $full;
+            }
+        }
+
+        if ($user->isDirty('email')) {
             // Force fill the email_verified_at to null if email is changed
-            $request->user()->forceFill([
+            $user->forceFill([
                 'email_verified_at' => null
             ]);
         }
 
-        $request->user()->save();
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
@@ -50,6 +64,7 @@ class ProfileController extends Controller
             'password' => ['required', 'current_password'],
         ]);
 
+         /** @var \App\Models\User $user */
         $user = $request->user();
 
         Auth::logout();
