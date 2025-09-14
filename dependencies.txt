@@ -1,5 +1,18 @@
+# On the other laptop, install Laravel IDE Helper
+composer require --dev barryvdh/laravel-ide-helper
+
+# Generate helper files
+php artisan ide-helper:generate
+php artisan ide-helper:models
+php artisan ide-helper:meta
+
+
+
+
+
+
 ]8;;https://github.com/barryvdh/laravel-ide-helper/tree/v3.6.0\barryvdh/laravel-ide-helper]8;;\         3.6.0   Laravel IDE Helper, generates correct PHPDo...
-]8;;https://github.com/barryvdh/ReflectionDocBlock/tree/v2.4.0\barryvdh/reflection-docblock]8;;\        2.4.0  
+]8;;https://github.com/barryvdh/ReflectionDocBlock/tree/v2.4.0\barryvdh/reflection-docblock]8;;\        2.4.0
 ]8;;https://github.com/paratestphp/paratest/tree/v7.8.3\brianium/paratest]8;;\                   7.8.3   Parallel testing for PHP
 ]8;;https://github.com/brick/math/tree/0.13.1\brick/math]8;;\                          0.13.1  Arbitrary-precision arithmetic library
 ]8;;https://github.com/CarbonPHP/carbon-doctrine-types/tree/3.2.0\carbonphp/carbon-doctrine-types]8;;\     3.2.0   Types to use Carbon in Doctrine
