@@ -26,10 +26,7 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        // use helper to avoid static-analysis warning
-        session()->regenerate();
-
-        // $request->session()->regenerate();
+        $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
