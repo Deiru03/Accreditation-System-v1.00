@@ -7,7 +7,8 @@
                 <p class="text-sm text-gray-500">Manage system users, roles and access.</p>
             </div>
             <div class="flex gap-2">
-                <a href="{{ route('users.create') }}" class="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium px-4 py-2 rounded-md shadow">
+                {{-- {{ route('users.create') }} --}}
+                <a href="#" class="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium px-4 py-2 rounded-md shadow">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
                     </svg>
@@ -76,7 +77,7 @@
                             <tr class="hover:bg-blue-50/40">
                                 <td class="px-4 py-3 text-gray-500">{{ ($users->firstItem() ?? 1) + $loop->index }}</td>
                                 <td class="px-4 py-3 font-medium text-gray-800">
-                                    <div>{{ $user->name }}</div>
+                                    <div>{{ $user->first_name }}</div>
                                     <div class="text-xs text-gray-500">ID: {{ $user->id }}</div>
                                 </td>
                                 <td class="px-4 py-3 text-gray-700">{{ $user->email }}</td>

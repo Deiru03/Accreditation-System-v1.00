@@ -28,6 +28,7 @@ Route::middleware(['auth', 'iqa'])->group(function () {
 
     //Views
     Route::get('/i-dashboard', [IVC::class, 'iDashboard'])->name('iqa.dashboard');
+    Route::get('/i-users', [IVC::class, 'iUsers'])->name('iqa.users');
 
 });
 
