@@ -14,9 +14,9 @@ class ViewController extends Controller
         return view('iqa-views.iDashboard');
     }
 
-    public function iUsers()
-    {
-        $users = User::paginate(50);
-        return view('iqa-views.iUsers', compact('users'));
-    }
+    // public function iUsers()
+    // {
+    //     $users = User::paginate(50);
+    //     return view('iqa-views.iUsers', compact('users'));
+    // }
 }

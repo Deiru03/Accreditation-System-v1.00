@@ -19,25 +19,25 @@
         <div class="min-h-screen bg-gray-100 flex">
 
             <!-- Sidebar -->
-            <x-sidebar 
+            <x-sidebar
                 bgColor="bg-blue-900"
                 borderColor="border-blue-800"
                 textColor="text-white"
                 hoverColor="bg-blue-800"
                 title="IQA Navigation">
-                
+
                 <x-sidebar-menu-item icon="dashboard" href="{{ route('iqa.dashboard') }}">
                     Dashboard
                 </x-sidebar-menu-item>
-                
-                <x-sidebar-menu-item icon="people" href="#">
+
+                <x-sidebar-menu-item icon="people" href="{{ route('iqa.users.index') }}">
                     Users
                 </x-sidebar-menu-item>
-                
+
                 <x-sidebar-menu-item icon="description" href="#">
                     Documents
                 </x-sidebar-menu-item>
-                
+
                 <x-sidebar-menu-item icon="bar_chart" href="#">
                     Reports
                 </x-sidebar-menu-item>
@@ -51,7 +51,7 @@
                     'logoClass' => 'text-white',
                     'buttonClass' => 'text-blue-100 bg-blue-800 hover:text-white hover:bg-blue-700',
                     'hamburgerClass' => 'text-blue-200 hover:text-white hover:bg-blue-700',
-                    'responsiveBorderClass' => 'border-blue-600', 
+                    'responsiveBorderClass' => 'border-blue-600',
                     'responsiveTextClass' => 'text-white',
                     'responsiveSubTextClass' => 'text-blue-200',
                     'portalTitle' => 'IQA Admin Panel',
