@@ -131,26 +131,19 @@
                                     </td>
 
                                     <td class="px-4 py-3 text-xs">
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium
-                                            @switch($userRole)
-                                                 @case('admin')
-                                                    bg-blue-100 text-blue-700
-                                                    @break
-                                                @case('iqa')
-                                                    bg-blue-100 text-blue-700
-                                                    @break
-                                                @case('validator')
-                                                    bg-green-100 text-green-700
-                                                    @break
-                                                @case('accreditor')
-                                                    bg-purple-100 text-purple-700
-                                                    @break
-                                                @case('uploader')
-                                                    bg-gray-100 text-gray-700
-                                                    @break
-                                                @default
-                                                    bg-gray-100 text-gray-700
-                                            @endswitch">
+                                        @php
+                                            $roleColors = [
+                                                'admin' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700'],
+                                                'iqa' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700'],
+                                                'validator' => ['bg' => 'bg-green-100', 'text' => 'text-green-700'],
+                                                'accreditor' => ['bg' => 'bg-purple-100', 'text' => 'text-purple-700'],
+                                                'uploader' => ['bg' => 'bg-gray-100', 'text' => 'text-gray-700'],
+                                            ];
+
+                                            $bgColor = $roleColors[$userRole]['bg'] ?? 'bg-gray-100';
+                                            $textColor = $roleColors[$userRole]['text'] ?? 'text-gray-700';
+                                        @endphp
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium {{ $bgColor }} {{ $textColor }}">
                                             {{ ucfirst($userRole) }}
                                         </span>
                                     </td>
