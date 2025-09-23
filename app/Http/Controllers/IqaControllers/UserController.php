@@ -50,9 +50,9 @@ class UserController extends Controller
     /**
      * Show the form for creating a new user.
      */
-    public function create(): View
+    public function create()//: View
     {
-        return view('iqa-views.user-create');
+        // return view('iqa-views.user-create');
     }
 
     /**
@@ -61,24 +61,42 @@ class UserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'user_type' => 'required|string|in:admin,iqa,validator,accreditor,uploader,user',
-            'employee_id' => 'nullable|string|max:255|unique:users,employee_id',
+            'first_name'   => 'required|string|max:255',
+            'last_name'    => 'required|string|max:255',
+            'middle_name'  => 'nullable|string|max:255',
+            'email'        => 'required|email|unique:users,email',
+            'password'     => 'required|string|min:8|confirmed',
+            'user_type'    => 'required|string|in:admin,iqa,validator,accreditor,uploader,user',
+            'employee_id'  => 'nullable|string|max:255|unique:users,employee_id',
             'phone_number' => 'nullable|string|max:255',
-            'address' => 'nullable|string',
-            'status' => 'required|in:active,pending,inactive',
+            'address'      => 'nullable|string',
+            'status'       => 'required|in:active,pending,inactive',
         ]);
 
-        $validated['password'] = bcrypt($validated['password']);
-        $validated['status'] = $validated['status'] ?? 'active';
+        try {
+            $fullname = $validated['first_name']
+            . ' '
+            . ($validated['middle_name'] ? $validated['middle_name'] . ' ' : '')
+            . $validated['last_name'];
 
-        User::create($validated);
+            $validated['name'] = $fullname;
+            $validated['password'] = bcrypt($validated['password']);
+            $validated['status'] = $validated['status'] ?? 'active';
 
-        return redirect()->route('iqa.users.index')->with('success', 'User created successfully!');
+            User::create($validated);
+
+            return redirect()
+            ->route('iqa.users.index')
+            ->with('success', 'User created successfully!, Name: ' . $fullname);
+        } catch (\Throwable $e) {
+            \Log::error('User creation failed: ' . $e->getMessage(), [
+            'exception' => $e,
+            ]);
+
+            return back()
+            ->withInput()
+            ->with('error', 'Failed to create user. Error: ' . $e->getMessage());
+        }
     }
 
     /**

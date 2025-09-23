@@ -17,6 +17,14 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 flex">
+            <!-- Notifications -->
+            <div>
+                @foreach (['success', 'error', 'warning', 'info', 'deleted'] as $type)
+                    @if(session($type))
+                        <x-notification :type="$type" :message="session($type)" />
+                    @endif
+                @endforeach
+            </div>
 
             <!-- Sidebar -->
             <x-sidebar

@@ -1,6 +1,6 @@
 <!-- filepath: c:\xampp\htdocs\clients-project\Accreditation-Web-v1\resources\views\iqa-views\iUsers.blade.php -->
 <x-iqa-layout>
-    <div class="px-6 py-6">
+    <div class="px-6 py-6" x-data="{ open: false }">
         <!-- Page Header -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
             <div>
@@ -8,12 +8,15 @@
                 <p class="text-sm text-gray-500">Manage system users, roles and access.</p>
             </div>
             <div class="flex gap-2">
-                <a href="{{ route('iqa.users.create') }}" class="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium px-4 py-2 rounded-md shadow">
+                <!-- Add User Button -->
+                <button type="button" 
+                        @click="open = true" 
+                        class="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium px-4 py-2 rounded-md shadow">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
                     </svg>
                     Add User
-                </a>
+                </button>
             </div>
         </div>
 
@@ -227,5 +230,8 @@
                 </div>
             @endif
         </div>
-    </div>
+        
+        <!-- Create User Modal -->
+        @include('components.iqa.user.create-form')
+    </div>      
 </x-iqa-layout>
