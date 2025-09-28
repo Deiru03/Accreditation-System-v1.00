@@ -1,6 +1,11 @@
 <!-- filepath: c:\xampp\htdocs\clients-project\Accreditation-Web-v1\resources\views\iqa-views\iUsers.blade.php -->
 <x-iqa-layout>
-    <div class="px-6 py-6" x-data="{ open: false }">
+    <div class="px-6 py-6" x-data="{ 
+        open: false, 
+        showUserModal: false,
+        showEditModal: false,
+        selectedUser: {} 
+        }">
         <!-- Page Header -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
             <div>
@@ -165,17 +170,19 @@
 
                                     <td class="px-4 py-3 text-xs" onclick="event.stopPropagation()">
                                         <div class="flex justify-end gap-3">
-                                            <a href="{{ route('iqa.users.show', $user) }}"
-                                               class="text-blue-700 hover:text-blue-900 hover:underline flex items-center">
+                                            <button type="button"
+                                                    @click="showUserModal = true; selectedUser = {{ $user->toJson() }}"
+                                                    class="text-blue-700 hover:text-blue-900 hover:underline flex items-center">
                                                 <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                                 </svg>
                                                 View
-                                            </a>
+                                            </button>
 
-                                            <a href="{{ route('iqa.users.edit', $user) }}"
-                                               class="text-indigo-600 hover:text-indigo-800 hover:underline flex items-center">
+                                            <a href="javascript:void(0)"
+                                                @click="showEditModal = true; selectedUser = {{ $user->toJson() }}"
+                                                class="text-indigo-600 hover:text-indigo-800 hover:underline flex items-center">
                                                 <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                                 </svg>
@@ -233,5 +240,9 @@
         
         <!-- Create User Modal -->
         @include('components.iqa.user.create-form')
+        <!-- View User Modal -->
+        @include('components.iqa.user.show-form')
+        <!-- Edit User Modal -->
+        @include('components.iqa.user.edit-form')
     </div>      
 </x-iqa-layout>

@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -104,7 +106,7 @@ class UserController extends Controller
      */
     public function show(User $user): View
     {
-        return view('iqa-views.user-show', compact('user'));
+        return view('components.iqa.user.show-form', compact('user'));
     }
 
     /**
@@ -112,7 +114,7 @@ class UserController extends Controller
      */
     public function edit(User $user): View
     {
-        return view('iqa-views.user-edit', compact('user'));
+        return view('components.iqa.user.edit-form', compact('user'));
     }
 
     /**
@@ -120,21 +122,55 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user): RedirectResponse
     {
-        $validated = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'user_type' => 'required|string|in:admin,iqa,validator,accreditor,uploader,user',
-            'employee_id' => 'nullable|string|max:255|unique:users,employee_id,' . $user->id,
-            'phone_number' => 'nullable|string|max:255',
-            'address' => 'nullable|string',
-            'status' => 'required|in:active,pending,inactive',
-        ]);
+        try {
+            // Validate the incoming request
+            $validated = $request->validate([
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'middle_name' => 'nullable|string|max:255',
+                'email' => [
+                    'required',
+                    'email',
+                    function ($attribute, $value, $fail) use ($user) {
+                        // Check if the email exists in the database
+                        $existingUser = User::where('email', $value)->first();
+                        if ($existingUser && $existingUser->id !== $user->id) {
+                            $fail('The email address is already associated with another user.');
+                        }
+                    },
+                ],
+                'user_type' => 'required|string|in:admin,iqa,validator,accreditor,uploader,user',
+                'employee_id' => [
+                    'nullable',
+                    'string',
+                    'max:255',
+                    function ($attribute, $value, $fail) use ($user) {
+                        // Check if the employee ID exists in the database
+                        $existingUser = User::where('employee_id', $value)->first();
+                        if ($existingUser && $existingUser->id !== $user->id) {
+                            $fail('The employee ID is already associated with another user.');
+                        }
+                    },
+                ],
+                'phone_number' => 'nullable|string|max:255',
+                'address' => 'nullable|string',
+                'status' => 'required|in:active,pending,inactive',
+            ]);
 
-        $user->update($validated);
+            $userID = $user->id;
 
-        return redirect()->route('iqa.users.index')->with('success', 'User updated successfully!');
+            Log::error("User update validation failed: " . json_encode($validated). " User ID: " . $userID);
+
+            $user->update($validated);
+
+            return redirect()->route('iqa.users.index')->with('success', 'User updated successfully! Name: ' . $user->first_name);
+        } catch (\Throwable $th) {
+            \Log::error('User update failed: ' . $th->getMessage(), [
+                'exception' => $th,
+            ]);
+
+            return back()->withInput()->with('error', 'Failed to update user. Error: ' . $th->getMessage());
+        }
     }
 
     /**
@@ -150,18 +186,21 @@ class UserController extends Controller
                 ->with('error', 'You cannot delete your own account!');
             }
 
+            $userName = $user->first_name . ' ' . $user->last_name;
+            $userID = $user->id;
+
             // Perform the deletion
             $user->delete();
 
             return redirect()->route('iqa.users.index')
-            ->with('success', 'User deleted successfully!');
+            ->with('success', 'User deleted successfully!'  . ' Name: ' . $userName . ' ID: ' . $userID);
 
         } catch (\Exception $e) {
             // Log the error
             \Log::error('User deletion failed: ' . $e->getMessage());
 
             return redirect()->route('iqa.users.index')
-            ->with('error', 'Failed to delete user. Please try again.');
+            ->with('error', 'Failed to delete user. Please try again.' . ' Error: ' . $e->getMessage() );
         }
     }
 }

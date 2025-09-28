@@ -34,13 +34,13 @@ Route::middleware(['auth', 'iqa'])->group(function () {
     Route::get('/i-users', [IUC::class, 'index'])->name('iqa.users');
 
         // Users Management
-    Route::get('/i-users', [IUC::class, 'index'])->name('iqa.users.index');
-    Route::get('/i-users/create', [IUC::class, 'create'])->name('iqa.users.create');
-    Route::post('/i-users', [IUC::class, 'store'])->name('iqa.users.store');
-    Route::get('/i-users/{user}', [IUC::class, 'show'])->name('iqa.users.show');
-    Route::get('/i-users/{user}/edit', [IUC::class, 'edit'])->name('iqa.users.edit');
-    Route::patch('/i-users/{user}', [IUC::class, 'update'])->name('iqa.users.update');
-    Route::delete('/i-users/{user}', [IUC::class, 'destroy'])->name('iqa.users.destroy');
+        Route::get('/i-users', [IUC::class, 'index'])->name('iqa.users.index');
+        Route::get('/i-users/create', [IUC::class, 'create'])->name('iqa.users.create');
+        Route::post('/i-users', [IUC::class, 'store'])->name('iqa.users.store');
+        Route::get('/i-users/{user}', [IUC::class, 'show'])->name('iqa.users.show');
+        Route::get('/i-users/{user}/edit', [IUC::class, 'edit'])->name('iqa.users.edit');
+        Route::patch('/i-users/{user}', [IUC::class, 'update'])->name('iqa.users.update');
+        Route::delete('/i-users/{user}', [IUC::class, 'destroy'])->name('iqa.users.destroy');
 
     // Alternative: Use resource route (cleaner)
     // Route::resource('i-users', IUC::class)->names([
